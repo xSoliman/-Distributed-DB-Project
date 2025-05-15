@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Manager</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Database Manager ({{ if .IsMaster }}Master{{ else }}Slave{{ end }})</h1>
+        <input type="hidden" id="userType" value="{{ if .IsMaster }}master{{ else }}slave{{ end }}">
+        <div>
+            <label for="queryType">Query Type:</label>
+            <select id="queryType">
+                <option value="">Select Query Type</option>
+                <option value="select_table">Select Table</option>
+                <option value="insert">Insert</option>
+                <option value="update">Update</option>
+                <option value="delete">Delete</option>
+                {{ if .IsMaster }}
+                <option value="create_db">Create Database</option>
+                <option value="drop_db">Drop Database</option>
+                <option value="create_table">Create Table</option>
+                <option value="drop_table">Drop Table</option>
+                {{ end }}
+                <option value="mysql_query">Custom MySQL Query</option>
+            </select>
+        </div>
+        <div id="dynamicForm"></div>
+        <textarea id="customQuery" style="display:none;" rows="4" cols="50"
+            placeholder="Enter your custom MySQL query here"></textarea>
+        <button onclick="executeQuery()">Execute</button>
+        <div id="result"></div>
+    </div>
+    <script src="/static/script.js"></script>
+</body>
+
+</html>
